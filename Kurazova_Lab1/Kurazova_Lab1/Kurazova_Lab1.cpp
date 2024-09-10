@@ -11,6 +11,14 @@ struct Pipe
     bool maintenance;
 };
 
+struct Compression_Station
+{
+    std::string name;
+    int workshops_number;
+    int active_workshops_number;
+    int effectiveness;
+};
+
 int main()
 {
 
