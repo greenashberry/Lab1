@@ -20,6 +20,16 @@ struct Compression_Station
     int effectiveness;
 };
 
+void check_int(int& parameter) 
+{
+    while (cin.fail()) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Wrong input! \n";
+        cin >> parameter;
+    }
+}
+
 void menu()
 {
     cout << "Menu: \n";
@@ -39,15 +49,11 @@ void add_pipe(Pipe& Truba)
     cin >> Truba.name;
     cout << "Insert pipe's length: \n";
     cin >> Truba.length;
-    while (cin.fail()) {
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Wrong input! \n";
-        cin >> Truba.length;
-    }
+    check_int(Truba.length);
     cout << "Inset pipe's diameter: \n";
     cin >> Truba.diameter;
-    cout << "Insert pipe's maintenance status: \n";
+    check_int(Truba.diameter);
+    cout << "Insert pipe's maintenance status (0 - not in maintenance, everything else - in maintenance): \n";
     cin >> Truba.maintenance;
 }
 
@@ -56,6 +62,7 @@ void add_CS(Compression_Station& CS) {
     cin >> CS.name;
     cout << "Insert number of workshops: \n";
     cin >> CS.workshops_number;
+    check_int(CS.workshops_number);
     cout << "Insert number of ACTIVE workshops: \n";
     cin >> CS.active_workshops_number;
     cout << "Insert effectiveness levels (in %): \n";
@@ -74,7 +81,10 @@ int main()
         switch (command) {
         case 1: 
             add_pipe(Truba1);
-        case 2: //Добавить КС
+            break;
+        case 2: 
+            add_CS(CompStat1);
+            break;
         case 3: //Просмотр всех объектов
         case 4: //Редактировать трубу
         case 5: //Редактировать КС
