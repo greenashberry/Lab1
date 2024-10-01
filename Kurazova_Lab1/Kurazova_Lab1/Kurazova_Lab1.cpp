@@ -1,6 +1,4 @@
-﻿// Kurazova_Lab1.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
+﻿
 #include <iostream>
 using namespace std;
 
@@ -20,12 +18,46 @@ struct Compression_Station
     int effectiveness;
 };
 
-void check_int(int& parameter) 
+bool check_int(int&);
+void check_interval(int&, int, int);
+void check_bool(bool&);
+void menu();
+void add_pipe(Pipe&);
+void add_CS(Compression_Station&);
+void delete_error();
+
+void delete_error()
 {
-    while (cin.fail()) {
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Wrong input! \n";
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
+bool check_int(int& parameter) 
+{
+    while (!cin || (cin.peek() != '\n') || (parameter < 0)) {
+        delete_error();
+        cout << "Wrong input! (not an integer or negative)\n";
+        cin >> parameter;
+    }
+    return 1;
+}
+
+void check_interval(int& parameter, int left_border, int right_border)
+{
+    while (!cin || (cin.peek() != '\n') || (parameter < left_border) || (parameter > right_border))
+    {
+        delete_error();
+        cout << "Wrong input! (interval)" << endl;
+        cin >> parameter;
+    }
+}
+
+void check_bool(bool& parameter)
+{
+    while (cin.fail() || (cin.peek() != '\n') || ((parameter != 1) && (parameter != 0)))
+    {
+        delete_error();
+        cout << "Wrong input! (bool)" << endl;
         cin >> parameter;
     }
 }
@@ -50,11 +82,12 @@ void add_pipe(Pipe& Truba)
     cout << "Insert pipe's length: \n";
     cin >> Truba.length;
     check_int(Truba.length);
-    cout << "Inset pipe's diameter: \n";
+    cout << "Insert pipe's diameter: \n";
     cin >> Truba.diameter;
     check_int(Truba.diameter);
-    cout << "Insert pipe's maintenance status (0 - not in maintenance, everything else - in maintenance): \n";
+    cout << "Insert pipe's maintenance status (0 - not in maintenance, 1 - in maintenance): \n";
     cin >> Truba.maintenance;
+    check_bool(Truba.maintenance);
 }
 
 void add_CS(Compression_Station& CS) {
@@ -64,9 +97,10 @@ void add_CS(Compression_Station& CS) {
     cin >> CS.workshops_number;
     check_int(CS.workshops_number);
     cout << "Insert number of ACTIVE workshops: \n";
-    cin >> CS.active_workshops_number;
+    cin >> CS.workshops_number;
+    check_interval(CS.active_workshops_number, 0, CS.workshops_number);
     cout << "Insert effectiveness levels (in %): \n";
-    cin >> CS.effectiveness;
+    check_interval(CS.effectiveness, 0, 100);
 }
 
 int main()
@@ -78,20 +112,27 @@ int main()
         int command;
         menu();
         cin >> command;
+        check_interval(command, 0, 7);
         switch (command) {
-        case 1: 
+        case 1: //Добавить трубу
             add_pipe(Truba1);
             break;
-        case 2: 
+        case 2: //Добавить компрессорную станцию
             add_CS(CompStat1);
             break;
         case 3: //Просмотр всех объектов
+            break;
         case 4: //Редактировать трубу
+            break;
         case 5: //Редактировать КС
+            break;
         case 6: //Сохранить
+            break;
         case 7: //Загрузить
+            break;
         case 0:
             return 0;
+            break;
         }
     }
 }
