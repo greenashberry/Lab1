@@ -1,4 +1,4 @@
 ﻿  Kurazova_Lab1.cpp
-C:\Users\Thunderobot\OneDrive\Документы\GitHub\Lab1\Kurazova_Lab1\Kurazova_Lab1\Kurazova_Lab1.cpp(127,97): warning C4293: <<: отрицательное или слишком большое смещение; поведение не определено
-C:\Users\Thunderobot\OneDrive\Документы\GitHub\Lab1\Kurazova_Lab1\Kurazova_Lab1\Kurazova_Lab1.cpp(123,1): warning C4715: operator<<: значение возвращается не при всех путях выполнения
+C:\Users\Thunderobot\OneDrive\Документы\GitHub\Lab1\Kurazova_Lab1\Kurazova_Lab1\Kurazova_Lab1.cpp(47,77): warning C4804: <=: небезопасное использование типа "bool" в операции
+C:\Users\Thunderobot\OneDrive\Документы\GitHub\Lab1\Kurazova_Lab1\Kurazova_Lab1\Kurazova_Lab1.cpp(149,1): warning C4715: operator<<: значение возвращается не при всех путях выполнения
   Kurazova_Lab1.vcxproj -> C:\Users\Thunderobot\OneDrive\Документы\GitHub\Lab1\Kurazova_Lab1\x64\Debug\Kurazova_Lab1.exe

@@ -25,8 +25,34 @@ void menu();
 void add_pipe(Pipe&);
 void add_CS(Compression_Station&);
 void delete_error();
-void edit_pipe(bool&);
-void edit_CS(int&);
+void edit_pipe(Pipe&);
+void edit_CS(Compression_Station&);
+bool existence_check_pipe(const Pipe&);
+bool existence_check_cs(const Compression_Station&);
+
+bool existence_check_pipe(const Pipe& Truba)
+{
+    if ((Truba.length > 0) && (Truba.diameter > 0))
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+bool existence_check_cs(const Compression_Station& CS)
+{
+    if ((CS.workshops_number > 0) && (CS.active_workshops_number > 0) && (0 <= CS.effectiveness <= 100) && (CS.workshops_number >= CS.active_workshops_number))
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
 
 void delete_error()
 {
@@ -71,7 +97,7 @@ void menu()
     cout << "2. Add a compression station \n";
     cout << "3. View all objects \n";
     cout << "4. Change pipe's maintenance status \n";
-    cout << "5. Change a number of active workshops \n";
+    cout << "5. Change number of active workshops \n";
     cout << "6. Save \n";
     cout << "7. Load \n";
     cout << "0. Exit \n";
@@ -99,7 +125,7 @@ void add_CS(Compression_Station& CS) {
     cin >> CS.workshops_number;
     check_int(CS.workshops_number);
     cout << "Insert number of ACTIVE workshops: \n";
-    cin >> CS.workshops_number;
+    cin >> CS.active_workshops_number;
     check_interval(CS.active_workshops_number, 0, CS.workshops_number);
     cout << "Insert effectiveness levels (in %): \n";
     check_interval(CS.effectiveness, 0, 100);
@@ -107,7 +133,7 @@ void add_CS(Compression_Station& CS) {
 
 ostream& operator << (ostream& out, const Pipe& Truba)
 {
-    if ((Truba.diameter > 0) && (Truba.length > 0))
+    if (existence_check_pipe(Truba))
     {
         cout << "Pipe " << Truba.name << endl
             << "Length: " << Truba.length << endl
@@ -124,7 +150,7 @@ ostream& operator << (ostream& out, const Pipe& Truba)
 
 ostream& operator << (ostream& out, const Compression_Station& CS)
 {
-    if ((CS.workshops_number > 0) && (CS.active_workshops_number > 0) && (0 <= CS.effectiveness << 100) && (CS.workshops_number >= CS.active_workshops_number))
+    if (existence_check_cs(CS))
     {
         cout << "Compression station" << CS.name << endl
             << "Number of workshops:" << CS.workshops_number << endl
@@ -136,6 +162,34 @@ ostream& operator << (ostream& out, const Compression_Station& CS)
         cout << "Compression station doesn't exist or it is invalid" << endl;
     }
     return out;
+}
+
+void edit_pipe(Pipe& Truba)
+{
+    if (existence_check_pipe(Truba))
+    {
+        cout << "Insert pipe's maintenance status (0 - not in maintenance, 1 - in maintenance): " << endl;
+        cin >> Truba.maintenance;
+        check_bool(Truba.maintenance);
+    }
+    else
+    {
+        cout << "Pipe doesn't exist!" << endl;
+    }
+}
+
+void edit_CS(Compression_Station& CS)
+{
+    if (existence_check_cs(CS))
+    {
+        cout << "Insert number of ACTIVE workshops: \n";
+        cin >> CS.active_workshops_number;
+        check_interval(CS.active_workshops_number, 0, CS.workshops_number);
+    }
+    else
+    {
+        cout << "Compression sttation doesn't exist!" << endl;
+    }
 }
 
 int main()
@@ -160,8 +214,10 @@ int main()
             cout << CompStat1;
             break;
         case 4: //Редактировать трубу
+            edit_pipe(Truba1);
             break;
         case 5: //Редактировать КС
+            edit_CS(CompStat1);
             break;
         case 6: //Сохранить
             break;
