@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{733BC264-C063-44D4-B43A-29ED3C721DEA}|Kurazova_Lab1\\Kurazova_Lab1.vcxproj|C:\\Users\\Thunderobot\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Lab1\\Kurazova_Lab1\\Kurazova_Lab1\\Kurazova_Lab1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{733BC264-C063-44D4-B43A-29ED3C721DEA}|Kurazova_Lab1\\Kurazova_Lab1.vcxproj|solutionrelative:Kurazova_Lab1\\Kurazova_Lab1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Thunderobot\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Lab1\\Kurazova_Lab1\\Kurazova_Lab1\\save.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Kurazova_Lab1\\save.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +18,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "save.txt",
+              "DocumentMoniker": "C:\\Users\\Thunderobot\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Lab1\\Kurazova_Lab1\\Kurazova_Lab1\\save.txt",
+              "RelativeDocumentMoniker": "Kurazova_Lab1\\save.txt",
+              "ToolTip": "C:\\Users\\Thunderobot\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Lab1\\Kurazova_Lab1\\Kurazova_Lab1\\save.txt",
+              "RelativeToolTip": "Kurazova_Lab1\\save.txt",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2024-10-02T20:54:44.486Z"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,7 +40,7 @@
               "RelativeDocumentMoniker": "Kurazova_Lab1\\Kurazova_Lab1.cpp",
               "ToolTip": "C:\\Users\\Thunderobot\\OneDrive\\\u0414\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B\\GitHub\\Lab1\\Kurazova_Lab1\\Kurazova_Lab1\\Kurazova_Lab1.cpp",
               "RelativeToolTip": "Kurazova_Lab1\\Kurazova_Lab1.cpp",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAAAGMAAAAWAAAA",
+              "ViewState": "AQIAAD8AAAAAAAAAAAAAADkBAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-09-10T07:34:14.354Z",
               "EditorCaption": ""

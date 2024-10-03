@@ -1,5 +1,5 @@
-﻿
-#include <iostream>
+﻿#include <iostream>
+#include <fstream>
 using namespace std;
 
 struct Pipe
@@ -22,13 +22,14 @@ bool check_int(int&);
 void check_interval(int&, int, int);
 void check_bool(bool&);
 void menu();
-void add_pipe(Pipe&);
-void add_CS(Compression_Station&);
 void delete_error();
 void edit_pipe(Pipe&);
 void edit_CS(Compression_Station&);
 bool existence_check_pipe(const Pipe&);
 bool existence_check_cs(const Compression_Station&);
+void save(const Pipe&, const Compression_Station&);
+int load(Pipe&, Compression_Station&);
+bool file_read_check();
 
 bool existence_check_pipe(const Pipe& Truba)
 {
@@ -44,7 +45,7 @@ bool existence_check_pipe(const Pipe& Truba)
 
 bool existence_check_cs(const Compression_Station& CS)
 {
-    if ((CS.workshops_number > 0) && (CS.active_workshops_number > 0) && (0 <= CS.effectiveness <= 100) && (CS.workshops_number >= CS.active_workshops_number))
+    if ((CS.workshops_number > 0) && (CS.active_workshops_number >= 0) && (0 <= CS.effectiveness <= 100) && (CS.workshops_number >= CS.active_workshops_number))
     {
         return 1;
     }
@@ -103,7 +104,7 @@ void menu()
     cout << "0. Exit \n";
 }
 
-void add_pipe(Pipe& Truba)
+istream& operator << (istream& in, Pipe& Truba)
 {
     cout << "Insert pipe's name: \n";
     cin >> Truba.name;
@@ -116,9 +117,11 @@ void add_pipe(Pipe& Truba)
     cout << "Insert pipe's maintenance status (0 - not in maintenance, 1 - in maintenance): " << endl;
     cin >> Truba.maintenance;
     check_bool(Truba.maintenance);
+    return in;
 }
 
-void add_CS(Compression_Station& CS) {
+istream& operator << (istream& in, Compression_Station& CS)
+{
     cout << "Insert CS's name: \n";
     cin >> CS.name;
     cout << "Insert number of workshops: \n";
@@ -128,7 +131,9 @@ void add_CS(Compression_Station& CS) {
     cin >> CS.active_workshops_number;
     check_interval(CS.active_workshops_number, 0, CS.workshops_number);
     cout << "Insert effectiveness levels (in %): \n";
+    cin >> CS.effectiveness;
     check_interval(CS.effectiveness, 0, 100);
+    return in;
 }
 
 ostream& operator << (ostream& out, const Pipe& Truba)
@@ -152,9 +157,9 @@ ostream& operator << (ostream& out, const Compression_Station& CS)
 {
     if (existence_check_cs(CS))
     {
-        cout << "Compression station" << CS.name << endl
+        cout << "Compression station " << CS.name << endl
             << "Number of workshops:" << CS.workshops_number << endl
-            << "Number of workshops:" << CS.active_workshops_number << endl
+            << "Number of active workshops:" << CS.active_workshops_number << endl
             << "Efectiveness (in %): " << CS.effectiveness << endl;
     }
     else
@@ -188,7 +193,126 @@ void edit_CS(Compression_Station& CS)
     }
     else
     {
-        cout << "Compression sttation doesn't exist!" << endl;
+        cout << "Compression station doesn't exist!" << endl;
+    }
+}
+
+void save(const Pipe& Truba, const Compression_Station& CS)
+{
+    ofstream fout;
+    fout.open("save.txt");
+    if (existence_check_pipe(Truba))
+    {
+        fout << "Pipe" << endl
+            << Truba.name << endl
+            << Truba.length << endl
+            << Truba.diameter << endl
+            << Truba.maintenance << endl;
+    }
+    if (existence_check_cs(CS))
+    {
+        fout << "CS" << endl
+            << CS.name << endl
+            << CS.workshops_number << endl
+            << CS.active_workshops_number << endl
+            << CS.effectiveness << endl;
+    }
+    fout.close();
+}
+
+int load(Pipe& Truba, Compression_Station& CS)
+{
+    ifstream fin;
+    string object_name;
+    fin.open("save.txt");
+    if (!fin)
+    {
+        cout << "File doesn't exist" << endl;
+        return 0;
+    }
+    fin >> object_name;
+    if (object_name == "Pipe")
+    {
+        fin >> Truba.name;
+        if (fin.fail() || (fin.peek() != '\n'))
+        {
+            fin.clear();
+            fin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "File is invalid" << endl;
+            return 0;
+        }
+        fin >> Truba.length;
+        if (fin.fail() || (fin.peek() != '\n'))
+        {
+            fin.clear();
+            fin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "File is invalid" << endl;
+            return 0;
+        }
+        fin >> Truba.diameter;
+        if (fin.fail() || (fin.peek() != '\n'))
+        {
+            fin.clear();
+            fin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "File is invalid" << endl;
+            return 0;
+        }
+        fin >> Truba.maintenance;
+        if (fin.fail() || (fin.peek() != '\n'))
+        {
+            fin.clear();
+            fin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "File is invalid" << endl;
+            return 0;
+        }
+        if (!existence_check_pipe(Truba))
+        {
+            fin.clear();
+            fin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "File is invalid" << endl;
+            return 0;
+        }
+        fin >> object_name;
+    }
+    if (object_name == "CS")
+    {
+        fin >> CS.name;
+        if (fin.fail() || (fin.peek() != '\n'))
+        {
+            fin.clear();
+            fin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "File is invalid" << endl;
+            return 0;
+        }
+        fin >> CS.workshops_number;
+        if (fin.fail() || (fin.peek() != '\n'))
+        {
+            fin.clear();
+            fin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "File is invalid" << endl;
+            return 0;
+        }
+        fin >> CS.active_workshops_number;
+        if (fin.fail() || (fin.peek() != '\n'))
+        {
+            fin.clear();
+            fin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "File is invalid" << endl;
+            return 0;
+        }
+        fin >> CS.effectiveness;
+        if (fin.fail() || (fin.peek() != '\n'))
+        {
+            fin.clear();
+            fin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "File is invalid" << endl;
+            return 0;
+        }
+        if (!existence_check_cs(CS))
+        {
+            cout << "File is invalid" << endl;
+            return 0;
+        }
     }
 }
 
@@ -204,10 +328,10 @@ int main()
         check_interval(command, 0, 7);
         switch (command) {
         case 1: //Добавить трубу
-            add_pipe(Truba1);
+            cin << Truba1;
             break;
         case 2: //Добавить компрессорную станцию
-            add_CS(CompStat1);
+            cin << CompStat1;
             break;
         case 3: //Просмотр всех объектов
             cout << Truba1;
@@ -220,8 +344,10 @@ int main()
             edit_CS(CompStat1);
             break;
         case 6: //Сохранить
+            save(Truba1, CompStat1);
             break;
         case 7: //Загрузить
+            load(Truba1, CompStat1);
             break;
         case 0:
             return 0;
