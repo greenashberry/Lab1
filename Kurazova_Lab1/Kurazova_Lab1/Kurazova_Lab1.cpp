@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <fstream>
+#include <string>
 using namespace std;
 
 struct Pipe
@@ -107,7 +108,7 @@ void menu()
 istream& operator << (istream& in, Pipe& Truba)
 {
     cout << "Insert pipe's name: \n";
-    cin >> Truba.name;
+    getline(cin, Truba.name);
     cout << "Insert pipe's length: \n";
     cin >> Truba.length;
     check_int(Truba.length);
@@ -123,7 +124,7 @@ istream& operator << (istream& in, Pipe& Truba)
 istream& operator << (istream& in, Compression_Station& CS)
 {
     cout << "Insert CS's name: \n";
-    cin >> CS.name;
+    getline(cin, CS.name);
     cout << "Insert number of workshops: \n";
     cin >> CS.workshops_number;
     check_int(CS.workshops_number);
@@ -314,6 +315,7 @@ int load(Pipe& Truba, Compression_Station& CS)
             return 0;
         }
     }
+    //
 }
 
 int main()
